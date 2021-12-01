@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +12,9 @@ public class MainActivity2 extends AppCompatActivity {
 
     Button armButton, legButton, chestButton, backButton, coreButton;
 
-    Button homeButton, mapButton, userButton;
+
+    ImageButton homeButton, mapButton, userButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +45,7 @@ public class MainActivity2 extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity2.this, MapActivity.class);
+                Intent intent = new Intent(MainActivity2.this, MapsActivity.class);
                 intent.putExtra("user", getUsername());
                 startActivity(intent);
             }

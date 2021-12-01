@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ArmSubmitActivity extends AppCompatActivity {
-    Button homeButton, mapButton, userButton;
+    ImageButton homeButton, mapButton, userButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,7 @@ public class ArmSubmitActivity extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ArmSubmitActivity.this, MapActivity.class);
+                Intent intent = new Intent(ArmSubmitActivity.this, MapsActivity.class);
                 intent.putExtra("user", getUsername());
                 startActivity(intent);
             }

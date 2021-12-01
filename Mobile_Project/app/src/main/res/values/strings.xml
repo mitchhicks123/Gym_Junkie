@@ -4,6 +4,8 @@
 
     <!-- App String values -->
     <string name="title">Gym Junkie</string>
+    <string name="exercise">Exercise Name</string>
+    <string name="exerciseDescription">Exercise Description</string>
 
     <!-- App Button String values -->
     <string name="login">Login</string>

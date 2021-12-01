@@ -11,7 +11,7 @@ import java.util.Locale;
 public class DBHandler extends SQLiteOpenHelper {
 
     // creating a constant variables for our database.
-    private static final String DB_NAME = "projectDB";
+    private static final String DB_NAME = "testDB";
     private static final int DB_VERSION = 1;
 
     //Authentication Table
@@ -27,19 +27,23 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //leg workouts
     private static final String LEG_TABLE_NAME = "legWorkouts";
-    private static final String LEG_COL = "legs";
+    private static final String LEG_TITLE_COL = "legsName";
+    private static final String LEG_DESC_COL = "legsDescription";
 
-    /*leg workouts
-    private static final String LEG_TABLE_NAME = "legWorkouts";
-    private static final String LEG_COL = "legs";
+    //chest workouts
+    private static final String CHEST_TABLE_NAME = "chestWorkouts";
+    private static final String CHEST_TITLE_COL = "chestName";
+    private static final String CHEST_DESC_COL = "chestDescription";
 
-    //leg workouts
-    private static final String LEG_TABLE_NAME = "legWorkouts";
-    private static final String LEG_COL = "legs";
+    //back workouts
+    private static final String BACK_TABLE_NAME = "backWorkouts";
+    private static final String BACK_TITLE_COL = "backName";
+    private static final String BACK_DESC_COL = "backDescription";
 
-    //leg workouts
-    private static final String LEG_TABLE_NAME = "legWorkouts";
-    private static final String LEG_COL = "legs"; */
+    //core workouts
+    private static final String CORE_TABLE_NAME = "coreWorkouts";
+    private static final String CORE_TITLE_COL = "coreName";
+    private static final String CORE_DESC_COL = "coreDescription";
 
 
     // creating a constructor for our database handler.
@@ -62,8 +66,36 @@ public class DBHandler extends SQLiteOpenHelper {
                 + ARM_TITLE_COL + " TEXT,"
                 + ARM_DESC_COL + " TEXT)";
 
+        String query2 = "CREATE TABLE " + LEG_TABLE_NAME + " ("
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + USERNAME_COL + " TEXT,"
+                + LEG_TITLE_COL + " TEXT,"
+                + LEG_DESC_COL + " TEXT)";
+
+        String query3 = "CREATE TABLE " + CHEST_TABLE_NAME + " ("
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + USERNAME_COL + " TEXT,"
+                + CHEST_TITLE_COL + " TEXT,"
+                + CHEST_DESC_COL + " TEXT)";
+
+        String query4 = "CREATE TABLE " + BACK_TABLE_NAME + " ("
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + USERNAME_COL + " TEXT,"
+                + BACK_TITLE_COL + " TEXT,"
+                + BACK_DESC_COL + " TEXT)";
+
+        String query5 = "CREATE TABLE " + CORE_TABLE_NAME + " ("
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + USERNAME_COL + " TEXT,"
+                + CORE_TITLE_COL + " TEXT,"
+                + CORE_DESC_COL + " TEXT)";
+
         db.execSQL(query);
         db.execSQL(query1);
+        db.execSQL(query2);
+        db.execSQL(query3);
+        db.execSQL(query4);
+        db.execSQL(query5);
     }
 
 
@@ -116,8 +148,7 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(ARM_TABLE_NAME, new String[]{ARM_TITLE_COL, ARM_DESC_COL}, USERNAME_COL + "=?", new String[]{username},null, null, null);
 
         String[] workouts = new String[100];
-
-        String[] fix = {"fail"};
+        String[] fail = {"fail"};
         //checks to see if there are values in the cursor... otherwise empty query
         if(cursor.moveToFirst()){
             for (int i = 0; i < cursor.getCount(); i++) {
@@ -126,8 +157,24 @@ public class DBHandler extends SQLiteOpenHelper {
             return workouts;
         }else{ //empty query
             db.close();
-            return fix;
+            return fail;
         }
+    }
+
+    public int addArmWorkout(String username, String exerciseName, String exerciseDescription) {
+        SQLiteDatabase dbWrite = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //first check db for existing user
+        // passing all values with their key value
+        values.put(USERNAME_COL, username);
+        values.put(ARM_TITLE_COL, exerciseName);
+        values.put(ARM_DESC_COL, exerciseDescription);
+        dbWrite.insert(ARM_TABLE_NAME, null, values);
+
+        // close db connection
+        dbWrite.close();
+        return 1;
     }
 
     //this method is used to search for an address in the database

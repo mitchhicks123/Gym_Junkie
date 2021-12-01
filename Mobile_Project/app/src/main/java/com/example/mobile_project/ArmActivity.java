@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,10 +22,23 @@ public class ArmActivity extends AppCompatActivity {
 
         dbHandler = new DBHandler(ArmActivity.this);
 
+        //search db for notes then pull them an display
+        String[] answer;
+        String toaster = "";
+        answer = dbHandler.readArmWorkouts(getUsername());
+
+        if (answer[0].equals("fail")){
+            Toast.makeText(ArmActivity.this, "No Workouts Yet", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            for (int i = 0; i < answer.length; i++){
+                toaster += " " + answer[i];
+            }
+            Toast.makeText(ArmActivity.this, toaster, Toast.LENGTH_SHORT).show();
+        }
 
 
         //initiate buttons
-        addButton = findViewById(R.id.add);
         homeButton = findViewById(R.id.home);
         mapButton = findViewById(R.id.map);
         userButton = findViewById(R.id.user);
@@ -56,6 +70,7 @@ public class ArmActivity extends AppCompatActivity {
             }
         });
 
+        addButton = findViewById(R.id.add);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

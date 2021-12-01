@@ -12,7 +12,7 @@ public class MapActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.arm_submit);
+        setContentView(R.layout.map);
 
         homeButton = findViewById(R.id.home);
         mapButton = findViewById(R.id.map);

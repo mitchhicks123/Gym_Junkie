@@ -50,6 +50,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserActivity" />
+        <activity android:name=".ArmActivity" />
+        <activity android:name=".ArmSubmitActivity" />
+        <activity android:name=".LegSubmitActivity" />
+        <activity android:name=".LegActivity" />
+
     </application>
 
 </manifest>

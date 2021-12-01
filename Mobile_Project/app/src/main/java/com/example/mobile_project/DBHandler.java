@@ -11,7 +11,7 @@ import java.util.Locale;
 public class DBHandler extends SQLiteOpenHelper {
 
     // creating a constant variables for our database.
-    private static final String DB_NAME = "testDB";
+    private static final String DB_NAME = "test1DB";
     private static final int DB_VERSION = 1;
 
     //Authentication Table
@@ -142,24 +142,12 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
-    public String[] readArmWorkouts(String username) {
-        //query database
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(ARM_TABLE_NAME, new String[]{ARM_TITLE_COL, ARM_DESC_COL}, USERNAME_COL + "=?", new String[]{username},null, null, null);
-
-        String[] workouts = new String[100];
-        String[] fail = {"fail"};
-        //checks to see if there are values in the cursor... otherwise empty query
-        if(cursor.moveToFirst()){
-            for (int i = 0; i < cursor.getCount(); i++) {
-                workouts[i] = cursor.getString(i);
-            }
-            return workouts;
-        }else{ //empty query
-            db.close();
-            return fail;
-        }
+    public Cursor query (String query) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery(query, null);
+        return cursor;
     }
+
 
     public int addArmWorkout(String username, String exerciseName, String exerciseDescription) {
         SQLiteDatabase dbWrite = this.getWritableDatabase();
@@ -171,6 +159,22 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(ARM_TITLE_COL, exerciseName);
         values.put(ARM_DESC_COL, exerciseDescription);
         dbWrite.insert(ARM_TABLE_NAME, null, values);
+
+        // close db connection
+        dbWrite.close();
+        return 1;
+    }
+
+    public int addLegWorkout(String username, String exerciseName, String exerciseDescription) {
+        SQLiteDatabase dbWrite = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //first check db for existing user
+        // passing all values with their key value
+        values.put(USERNAME_COL, username);
+        values.put(LEG_TITLE_COL, exerciseName);
+        values.put(LEG_DESC_COL, exerciseDescription);
+        dbWrite.insert(LEG_TABLE_NAME, null, values);
 
         // close db connection
         dbWrite.close();

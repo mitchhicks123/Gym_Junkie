@@ -46,7 +46,7 @@ public class LegSubmitActivity extends AppCompatActivity {
 
                 if (answer == 1){
                     Toast.makeText(LegSubmitActivity.this, "Workout Added", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LegSubmitActivity.this, ArmActivity.class);
+                    Intent intent = new Intent(LegSubmitActivity.this, LegActivity.class);
                     intent.putExtra("user", getUsername());
                     startActivity(intent);
                 }
